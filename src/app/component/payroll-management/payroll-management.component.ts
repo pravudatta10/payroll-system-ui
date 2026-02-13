@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './payroll-management.component.html',
   styleUrls: ['./payroll-management.component.css']
 })
-export class PayrollManagementComponent {}
+export class PayrollManagementComponent { }

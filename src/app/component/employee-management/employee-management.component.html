@@ -29,28 +29,38 @@
                         <div class="accordion" id="employeeAccordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="detailsHeading">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#detailsCollapse" aria-expanded="true" aria-controls="detailsCollapse">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#detailsCollapse" aria-expanded="true"
+                                        aria-controls="detailsCollapse">
                                         Employee Details
                                     </button>
                                 </h2>
-                                <div id="detailsCollapse" class="accordion-collapse collapse show" aria-labelledby="detailsHeading" data-bs-parent="#employeeAccordion">
+                                <div id="detailsCollapse" class="accordion-collapse collapse show"
+                                    aria-labelledby="detailsHeading" data-bs-parent="#employeeAccordion">
                                     <div class="accordion-body">
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <label class="form-label">First Name</label>
-                                                <input class="form-control" formControlName="firstName" placeholder="Rohit" />
-                                                <small *ngIf="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid" class="text-danger">
+                                                <input class="form-control" formControlName="firstName"
+                                                    placeholder="Rohit" />
+                                                <small
+                                                    *ngIf="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid"
+                                                    class="text-danger">
                                                     Enter a valid first name.
                                                 </small>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">Middle Name</label>
-                                                <input class="form-control" formControlName="middleName" placeholder="" />
+                                                <input class="form-control" formControlName="middleName"
+                                                    placeholder="" />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">Last Name</label>
-                                                <input class="form-control" formControlName="lastName" placeholder="Patil" />
-                                                <small *ngIf="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid" class="text-danger">
+                                                <input class="form-control" formControlName="lastName"
+                                                    placeholder="Patil" />
+                                                <small
+                                                    *ngIf="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid"
+                                                    class="text-danger">
                                                     Enter a valid last name.
                                                 </small>
                                             </div>
@@ -58,18 +68,23 @@
                                         <div class="row g-3 mt-2">
                                             <div class="col-md-6">
                                                 <label class="form-label">Email</label>
-                                                <input class="form-control" formControlName="email" type="email" placeholder="rohit.patil@company.com" />
-                                                <small *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid" class="text-danger">
+                                                <input class="form-control" formControlName="email" type="email"
+                                                    placeholder="rohit.patil@company.com" />
+                                                <small
+                                                    *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid"
+                                                    class="text-danger">
                                                     Enter a valid email.
                                                 </small>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">Department</label>
-                                                <input class="form-control" formControlName="department" placeholder="Engineering" />
+                                                <input class="form-control" formControlName="department"
+                                                    placeholder="Engineering" />
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">Designation</label>
-                                                <input class="form-control" formControlName="designation" placeholder="Java Developer" />
+                                                <input class="form-control" formControlName="designation"
+                                                    placeholder="Java Developer" />
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
@@ -83,34 +98,42 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="salaryHeading">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#salaryCollapse" aria-expanded="false" aria-controls="salaryCollapse">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#salaryCollapse" aria-expanded="false"
+                                        aria-controls="salaryCollapse">
                                         Salary Details
                                     </button>
                                 </h2>
-                                <div id="salaryCollapse" class="accordion-collapse collapse" aria-labelledby="salaryHeading" data-bs-parent="#employeeAccordion">
+                                <div id="salaryCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="salaryHeading" data-bs-parent="#employeeAccordion">
                                     <div class="accordion-body">
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <label class="form-label">Basic Salary</label>
-                                                <input class="form-control" type="number" min="0" formControlName="basicSalary" />
+                                                <input class="form-control" type="number" min="0"
+                                                    formControlName="basicSalary" />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">HRA</label>
-                                                <input class="form-control" type="number" min="0" formControlName="hra" />
+                                                <input class="form-control" type="number" min="0"
+                                                    formControlName="hra" />
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">Allowances</label>
-                                                <input class="form-control" type="number" min="0" formControlName="allowances" />
+                                                <input class="form-control" type="number" min="0"
+                                                    formControlName="allowances" />
                                             </div>
                                         </div>
                                         <div class="row g-3 mt-2">
                                             <div class="col-md-6">
                                                 <label class="form-label">Tax Percentage (%)</label>
-                                                <input class="form-control" type="number" min="0" max="100" formControlName="taxPercentage" />
+                                                <input class="form-control" type="number" min="0" max="100"
+                                                    formControlName="taxPercentage" />
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">PF Percentage (%)</label>
-                                                <input class="form-control" type="number" min="0" max="100" formControlName="pfPercentage" />
+                                                <input class="form-control" type="number" min="0" max="100"
+                                                    formControlName="pfPercentage" />
                                             </div>
                                         </div>
                                     </div>

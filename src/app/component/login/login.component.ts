@@ -17,18 +17,18 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   login(): void {
     this.isLoading = true;
     this.errorMessage = '';
-    
+
     this.authService.login(this.employeeId, this.password).subscribe({
-      next: (user) => {
+      next: (employee) => {
         this.isLoading = false;
-        if (user.role === 'employee') {
-          this.router.navigate(['/employee-profile', user.id]);
-        } else if (user.role === 'hr' || user.role === 'admin') {
+        if (employee.department === 'Engineering') {
+          this.router.navigate(['/employee-profile', employee.empCode]);
+        } else if (employee.department === 'HR' || employee.department === 'Admin') {
           this.router.navigate(['/employee-management']);
         }
       },
