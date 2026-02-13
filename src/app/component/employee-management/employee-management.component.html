@@ -1,0 +1,182 @@
+<div class="container py-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-lg-8">
+            <h1 class="h3 fw-bold mb-1">Employee Management</h1>
+            <p class="text-muted mb-0">
+                Manage employee onboarding, salary details, and active workforce data.
+            </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+            <button class="btn btn-outline-secondary" type="button" (click)="clearSelection()">
+                Reset Form
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="notification" class="alert alert-info" role="alert">
+        {{ notification }}
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h5 fw-semibold mb-3">
+                        {{ selectedEmployee ? 'Update Employee' : 'Onboard Employee' }}
+                    </h2>
+
+                    <form [formGroup]="employeeForm" (ngSubmit)="submitForm()" class="vstack gap-4">
+                        <div class="accordion" id="employeeAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="detailsHeading">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#detailsCollapse" aria-expanded="true" aria-controls="detailsCollapse">
+                                        Employee Details
+                                    </button>
+                                </h2>
+                                <div id="detailsCollapse" class="accordion-collapse collapse show" aria-labelledby="detailsHeading" data-bs-parent="#employeeAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label">First Name</label>
+                                                <input class="form-control" formControlName="firstName" placeholder="Rohit" />
+                                                <small *ngIf="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid" class="text-danger">
+                                                    Enter a valid first name.
+                                                </small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Middle Name</label>
+                                                <input class="form-control" formControlName="middleName" placeholder="" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Last Name</label>
+                                                <input class="form-control" formControlName="lastName" placeholder="Patil" />
+                                                <small *ngIf="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid" class="text-danger">
+                                                    Enter a valid last name.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email</label>
+                                                <input class="form-control" formControlName="email" type="email" placeholder="rohit.patil@company.com" />
+                                                <small *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid" class="text-danger">
+                                                    Enter a valid email.
+                                                </small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Department</label>
+                                                <input class="form-control" formControlName="department" placeholder="Engineering" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Designation</label>
+                                                <input class="form-control" formControlName="designation" placeholder="Java Developer" />
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Joining Date</label>
+                                                <input class="form-control" type="date" formControlName="joiningDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="salaryHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#salaryCollapse" aria-expanded="false" aria-controls="salaryCollapse">
+                                        Salary Details
+                                    </button>
+                                </h2>
+                                <div id="salaryCollapse" class="accordion-collapse collapse" aria-labelledby="salaryHeading" data-bs-parent="#employeeAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Basic Salary</label>
+                                                <input class="form-control" type="number" min="0" formControlName="basicSalary" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">HRA</label>
+                                                <input class="form-control" type="number" min="0" formControlName="hra" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Allowances</label>
+                                                <input class="form-control" type="number" min="0" formControlName="allowances" />
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Tax Percentage (%)</label>
+                                                <input class="form-control" type="number" min="0" max="100" formControlName="taxPercentage" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">PF Percentage (%)</label>
+                                                <input class="form-control" type="number" min="0" max="100" formControlName="pfPercentage" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit" [disabled]="isLoading">
+                            {{ selectedEmployee ? 'Save Changes' : 'Create Employee' }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h5 fw-semibold mb-0">Active Employees</h2>
+                        <div *ngIf="isLoading" class="spinner-border spinner-border-sm text-primary" role="status">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col" class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let employee of employees">
+                                    <td>{{ employee.empCode }}</td>
+                                    <td>
+                                        <div class="fw-semibold">{{ employee.fullName }}</div>
+                                        <div class="text-muted small">{{ employee.email }}</div>
+                                    </td>
+                                    <td>{{ employee.department }}</td>
+                                    <td>{{ employee.designation }}</td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-outline-primary" type="button"
+                                                (click)="selectEmployee(employee)">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-outline-danger" type="button"
+                                                (click)="deactivateEmployee(employee)">
+                                                Deactivate
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="employees.length === 0">
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        No active employees available.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
