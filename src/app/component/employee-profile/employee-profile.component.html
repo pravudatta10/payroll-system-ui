@@ -1,0 +1,25 @@
+<div class="container mt-2" style="max-width: 800px;" *ngIf="employee">
+  <h2>Employee Profile</h2>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Personal Details</h5>
+      <p><strong>Employee Code:</strong> {{ employee.empCode }}</p>
+      <p><strong>Name:</strong> {{ employee.fullName }}</p>
+      <p><strong>Email:</strong> {{ employee.email }}</p>
+      <p><strong>Department:</strong> {{ employee.department }}</p>
+      <p><strong>Designation:</strong> {{ employee.designation }}</p>
+      <p><strong>Joining Date:</strong> {{ employee.joiningDate }}</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Salary Details</h5>
+      <p><strong>Basic Salary:</strong> {{ employee.basicSalary }}</p>
+      <p><strong>HRA:</strong> {{ employee.hra }}</p>
+      <p><strong>Allowances:</strong> {{ employee.allowances }}</p>
+      <p><strong>Tax Percentage:</strong> {{ employee.taxPercentage }}%</p>
+      <p><strong>PF Percentage:</strong> {{ employee.pfPercentage }}%</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="!employee" class="alert alert-info mt-4">No employee data found.</div>

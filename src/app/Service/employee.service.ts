@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -9,7 +10,7 @@ import { Employee, EmployeeFormPayload, OnboardingResponse } from '../Interface/
 export class EmployeeService {
   private readonly baseUrl = 'http://localhost:8080/api/v1/employees';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
   getActiveEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.baseUrl);
@@ -25,5 +26,8 @@ export class EmployeeService {
 
   deactivateEmployee(empCode: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${empCode}`);
+  }
+  getEmployeeByEmpCode(empCode: string): Observable<Employee> {
+    return this.http.get<Employee>(`${this.baseUrl}/${empCode}`);
   }
 }
