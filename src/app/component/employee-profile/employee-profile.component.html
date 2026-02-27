@@ -6,7 +6,7 @@
         <div class="bg-white rounded-3 p-4 shadow-sm border">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #1a202c;">{{ employee?.fullName }}'s Profile
+              <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #1a202c;">{{ employee?.firstName }} {{ employee?.lastName }}'s Profile
               </h1>
               <p class="text-secondary mb-0" *ngIf="employee"> Employee ID: {{ employee.empCode }}</p>
             </div>
@@ -49,7 +49,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
               <span class="fw-bold text-secondary text-uppercase small">Full Name</span>
-              <span class="text-dark fw-500">{{ employee.fullName }}</span>
+              <span class="text-dark fw-500">{{ employee.firstName }} {{ employee.lastName }}</span>
             </div>
             <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
               <span class="fw-bold text-secondary text-uppercase small">Email</span>

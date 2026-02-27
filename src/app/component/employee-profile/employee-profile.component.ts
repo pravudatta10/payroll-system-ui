@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../../Service/employee.service';
 import { LeaveService } from '../../Service/leave.service';
 import { LeaveRequest, LEAVE_TYPES, LeaveApplicationResponse } from '../../Interface/leave.model';
+import { NotificationService } from '../../Service/notification.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -35,7 +36,8 @@ export class EmployeeProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
     private leaveService: LeaveService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificationService: NotificationService
   ) {
     this.initializeLeaveForm();
     this.setMinDate();

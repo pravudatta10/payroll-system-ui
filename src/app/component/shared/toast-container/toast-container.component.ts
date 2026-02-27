@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { NotificationMessage, NotificationService } from '../../../Service/notification.service';
 
 @Component({
@@ -7,11 +7,12 @@ import { NotificationMessage, NotificationService } from '../../../Service/notif
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="position-fixed bottom-0 end-0 p-3"
+         style="z-index: 2000; width: 350px;">
       <div *ngFor="let toast of toasts"
            class="alert alert-{{toast.type}} shadow mb-2">
         {{ toast.message }}
-      </div>l̥
+      </div>
     </div>
   `
 })
@@ -19,7 +20,7 @@ export class ToastContainerComponent implements OnInit {
 
   toasts: NotificationMessage[] = [];
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.notificationService.notification$.subscribe(msg => {
