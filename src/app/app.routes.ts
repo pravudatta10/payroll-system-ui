@@ -5,6 +5,7 @@ import { EmployeeManagementComponent } from './component/employee-management/emp
 
 import { PayrollManagementComponent } from './component/payroll-management/payroll-management.component';
 import { EmployeeProfileComponent } from './component/employee-profile/employee-profile.component';
+import { LeaveManagementComponent } from './component/leave-management/leave-management.component';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,4 +13,5 @@ export const routes: Routes = [
 	{ path: 'employee-management', component: EmployeeManagementComponent },
 	{ path: 'payroll-management', component: PayrollManagementComponent },
 	{ path: 'employee-profile/:id', component: EmployeeProfileComponent },
+	{ path: 'leave-management', component: LeaveManagementComponent },
 ];

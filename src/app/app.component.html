@@ -37,6 +37,11 @@
                             <i class="bi bi-calculator-fill me-1"></i>Payroll Management
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/leave-management" routerLinkActive="active">
+                            <i class="bi bi-calendar-check-fill me-1"></i>Leave Management
+                        </a>
+                    </li>
                 </ng-container>
 
                 <!-- Admin Navigation -->
@@ -66,14 +71,14 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="employeeDropdown"
                         style="border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item" href="#">
                                 <i class="bi bi-gear me-2"></i>Profile Settings
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
-                        </li>
+                        </li> -->
                         <li>
                             <a class="dropdown-item text-danger" (click)="logout()" style="cursor: pointer;">
                                 <i class="bi bi-box-arrow-right me-2"></i>Logout

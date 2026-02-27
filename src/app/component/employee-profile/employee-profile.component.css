@@ -1,1 +1,65 @@
-.container { max-width: 600px; }
+/* Minimal custom styling - Bootstrap handles the rest */
+
+/* Smooth transitions */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+/* Progress bar styling */
+.progress-bar {
+  border-radius: 50px;
+  transition: width 0.6s ease;
+}
+
+/* Button hover effects */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(108, 117, 125, 0.3);
+}
+
+/* Form focus effects */
+.form-control:focus,
+.form-select:focus {
+  transition: all 0.3s ease;
+}
+
+/* Animation for cards */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: slideIn 0.3s ease;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .d-grid {
+    gap: 1rem !important;
+  }
+}

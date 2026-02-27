@@ -13,6 +13,10 @@ export interface Employee {
   allowances: number;
   taxPercentage: number;
   pfPercentage: number;
+  totalPTO: number;
+  usedPTO: number;
+  totalCLSL: number;
+  usedCLSL: number;
 }
 
 export interface EmployeeFormPayload {

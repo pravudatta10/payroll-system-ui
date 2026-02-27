@@ -1,25 +1,360 @@
-<div class="container mt-2" style="max-width: 800px;" *ngIf="employee">
-  <h2>Employee Profile</h2>
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">Personal Details</h5>
-      <p><strong>Employee Code:</strong> {{ employee.empCode }}</p>
-      <p><strong>Name:</strong> {{ employee.fullName }}</p>
-      <p><strong>Email:</strong> {{ employee.email }}</p>
-      <p><strong>Department:</strong> {{ employee.department }}</p>
-      <p><strong>Designation:</strong> {{ employee.designation }}</p>
-      <p><strong>Joining Date:</strong> {{ employee.joiningDate }}</p>
+<div class="container-fluid py-4" style="background-color: #f8f9fa; min-height: calc(100vh - 100px);">
+  <!-- Header Section -->
+  <div class="container mb-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="bg-white rounded-3 p-4 shadow-sm border">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h1 class="fw-bold mb-2" style="font-size: 2.5rem; color: #1a202c;">{{ employee?.fullName }}'s Profile
+              </h1>
+              <p class="text-secondary mb-0" *ngIf="employee"> Employee ID: {{ employee.empCode }}</p>
+            </div>
+            <div *ngIf="employee" class="badge bg-success fs-6 px-3 py-2">Active</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Salary Details</h5>
-      <p><strong>Basic Salary:</strong> {{ employee.basicSalary }}</p>
-      <p><strong>HRA:</strong> {{ employee.hra }}</p>
-      <p><strong>Allowances:</strong> {{ employee.allowances }}</p>
-      <p><strong>Tax Percentage:</strong> {{ employee.taxPercentage }}%</p>
-      <p><strong>PF Percentage:</strong> {{ employee.pfPercentage }}%</p>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="min-height: 400px;">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="container">
+    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center border" role="alert">
+      <i class="bi bi-exclamation-triangle me-3 fs-5"></i>
+      <div>
+        <strong>Error:</strong> {{ error }}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <!-- Employee Content -->
+  <div *ngIf="employee && !loading" class="container">
+    <div class="row g-4">
+      <!-- Personal Information Card -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+          <div class="card-header bg-primary text-white p-3 d-flex align-items-center"
+            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <i class="bi bi-person-circle me-2 fs-5"></i>
+            <h5 class="mb-0">Personal Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
+              <span class="fw-bold text-secondary text-uppercase small">Full Name</span>
+              <span class="text-dark fw-500">{{ employee.fullName }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
+              <span class="fw-bold text-secondary text-uppercase small">Email</span>
+              <span class="text-primary fw-500">{{ employee.email }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
+              <span class="fw-bold text-secondary text-uppercase small">Department</span>
+              <span class="text-dark fw-500">{{ employee.department }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-start py-3 border-bottom">
+              <span class="fw-bold text-secondary text-uppercase small">Designation</span>
+              <span class="text-dark fw-500">{{ employee.designation }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-start py-3">
+              <span class="fw-bold text-secondary text-uppercase small">Joining Date</span>
+              <span class="text-dark fw-500">{{ employee.joiningDate | date: 'MMM dd, yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salary Information Card -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+          <div class="card-header text-white p-3 d-flex align-items-center"
+            style="background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);">
+            <i class="bi bi-wallet2 me-2 fs-5"></i>
+            <h5 class="mb-0">Salary Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center py-2">
+              <span class="text-secondary fw-500">Basic Salary</span>
+              <span class="text-success fw-bold fs-5">₹{{ employee.basicSalary | number: '1.2-2' }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2">
+              <span class="text-secondary fw-500">HRA</span>
+              <span class="text-success fw-bold fs-5">₹{{ employee.hra | number: '1.2-2' }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2 mb-3 pb-3 border-bottom">
+              <span class="text-secondary fw-500">Allowances</span>
+              <span class="text-success fw-bold fs-5">₹{{ employee.allowances | number: '1.2-2' }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-3 bg-light rounded px-3 mb-3">
+              <span class="fw-bold">Total Earnings</span>
+              <span class="text-success fw-bold fs-5">₹{{ (employee.basicSalary + employee.hra + employee.allowances) |
+                number: '1.2-2' }}</span>
+            </div>
+            <div class="bg-light p-3 rounded">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small text-secondary">Tax: {{ employee.taxPercentage }}%</span>
+                <span class="text-danger fw-bold">₹{{ ((employee.basicSalary + employee.hra + employee.allowances) *
+                  employee.taxPercentage / 100) | number: '1.2-2' }}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="small text-secondary">PF: {{ employee.pfPercentage }}%</span>
+                <span class="text-danger fw-bold">₹{{ ((employee.basicSalary + employee.hra + employee.allowances) *
+                  employee.pfPercentage / 100) | number: '1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leave Balance - PTO Card -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+          <div class="card-header text-white p-3 d-flex align-items-center"
+            style="background: linear-gradient(135deg, #198754 0%, #157347 100%);">
+            <i class="bi bi-calendar-check me-2 fs-5"></i>
+            <h5 class="mb-0">Leave Balance - PTO</h5>
+          </div>
+          <div class="card-body text-center">
+            <div class="display-1 fw-bold text-primary mb-2">{{ employee.totalPTO - employee.usedPTO }}</div>
+            <p class="text-secondary text-uppercase fw-bold small mb-4">Days Available</p>
+            <div class="progress mb-4" style="height: 25px;">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                [style.width.%]="(employee.usedPTO / employee.totalPTO) * 100" [attr.aria-valuenow]="employee.usedPTO"
+                aria-valuemin="0" [attr.aria-valuemax]="employee.totalPTO" style="border-radius: 50px;">
+              </div>
+            </div>
+            <small class="text-secondary">Used: {{ employee.usedPTO }}/{{ employee.totalPTO }} days</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leave Balance - Casual/Sick Card -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+          <div class="card-header text-white p-3 d-flex align-items-center"
+            style="background: linear-gradient(135deg, #0dcaf0 0%, #0ba5e0 100%);">
+            <i class="bi bi-calendar-event me-2 fs-5"></i>
+            <h5 class="mb-0">Leave Balance - Casual/Sick</h5>
+          </div>
+          <div class="card-body text-center">
+            <div class="display-1 fw-bold text-info mb-2">{{ employee.totalCLSL - employee.usedCLSL }}</div>
+            <p class="text-secondary text-uppercase fw-bold small mb-4">Days Available</p>
+            <div class="progress mb-4" style="height: 25px;">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                [style.width.%]="(employee.usedCLSL / employee.totalCLSL) * 100"
+                [attr.aria-valuenow]="employee.usedCLSL" aria-valuemin="0" [attr.aria-valuemax]="employee.totalCLSL"
+                style="border-radius: 50px;">
+              </div>
+            </div>
+            <small class="text-secondary">Used: {{ employee.usedCLSL }}/{{ employee.totalCLSL }} days</small>
+          </div>
+        </div>
+      </div>
+      <!-- Leave History -->
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+          <div class="card-header bg-dark text-white p-3">
+            <h5 class="mb-0">
+              <i class="bi bi-clock-history me-2"></i>
+              Leave History
+            </h5>
+          </div>
+
+          <div class="card-body p-0">
+
+            <div *ngIf="leaveHistoryLoading" class="text-center p-4">
+              <div class="spinner-border"></div>
+            </div>
+
+            <div *ngIf="!leaveHistoryLoading && leaveHistory.length === 0" class="text-center p-4 text-muted">
+              No leave records found.
+            </div>
+
+            <div class="table-responsive" *ngIf="leaveHistory.length > 0">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Leave Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Total Days</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let leave of leaveHistory">
+                    <td>{{ leave.leaveType }}</td>
+                    <td>{{ leave.fromDate | date:'MMM dd, yyyy' }}</td>
+                    <td>{{ leave.toDate | date:'MMM dd, yyyy' }}</td>
+                    <td>{{ leave.totalDays }}</td>
+                    <td>
+                      <span class="badge" [ngClass]="{
+                        'bg-warning text-dark': leave.status === 'PENDING',
+                        'bg-success': leave.status === 'APPROVED',
+                        'bg-danger': leave.status === 'REJECTED',
+                        'bg-secondary': leave.status === 'CANCELLED'
+                      }">
+                        {{ leave.status }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- Leave Application Card -->
+      <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+          <div class="card-header text-white p-3 d-flex justify-content-between align-items-center"
+            style="background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-file-earmark-plus me-2 fs-5"></i>
+              <h5 class="mb-0">Apply for Leave</h5>
+            </div>
+            <button class="btn btn-sm" [class.btn-light]="showLeaveForm" [class.btn-outline-light]="!showLeaveForm"
+              (click)="toggleLeaveForm()">
+              <i [class]="showLeaveForm ? 'bi bi-chevron-up' : 'bi bi-chevron-down'"></i>
+              {{ showLeaveForm ? 'Hide' : 'Show' }} Form
+            </button>
+          </div>
+
+          <!-- Success Message -->
+          <div *ngIf="leaveSuccess"
+            class="alert alert-success alert-dismissible fade show m-3 d-flex align-items-center border-0" role="alert">
+            <i class="bi bi-check-circle me-2 fs-5"></i>
+            <div>{{ successMessage }}</div>
+            <button type="button" class="btn-close" (click)="leaveSuccess = false"></button>
+          </div>
+
+          <!-- Leave Application Form -->
+          <div *ngIf="showLeaveForm" class="card-body p-4">
+            <!-- Error Message -->
+            <div *ngIf="leaveError"
+              class="alert alert-warning alert-dismissible fade show d-flex align-items-center border-0 mb-4"
+              role="alert">
+              <i class="bi bi-exclamation-triangle me-2 fs-5"></i>
+              <div>{{ leaveError }}</div>
+              <button type="button" class="btn-close" (click)="leaveError = null"></button>
+            </div>
+
+            <form [formGroup]="leaveForm" (ngSubmit)="submitLeaveApplication()">
+              <div class="row g-3">
+                <!-- Leave Type -->
+                <div class="col-md-6">
+                  <label for="leaveType" class="form-label fw-bold mb-2">
+                    Leave Type <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select form-select-lg" id="leaveType" formControlName="leaveType"
+                    [class.is-invalid]="leaveForm.get('leaveType')?.invalid && leaveForm.get('leaveType')?.touched">
+                    <option value="">-- Select Leave Type --</option>
+                    <option *ngFor="let type of leaveTypes" [value]="type.id">
+                      {{ type.name }} (Available: {{ getAvailableLeaveBalance(type.id) }} days)
+                    </option>
+                  </select>
+                  <div class="invalid-feedback"
+                    *ngIf="leaveForm.get('leaveType')?.invalid && leaveForm.get('leaveType')?.touched">
+                    Please select a leave type.
+                  </div>
+                </div>
+
+                <!-- From Date -->
+                <div class="col-md-6">
+                  <label for="fromDate" class="form-label fw-bold mb-2">
+                    From Date <span class="text-danger">*</span>
+                  </label>
+                  <input type="date" class="form-control form-control-lg" id="fromDate" formControlName="fromDate"
+                    [min]="minDate"
+                    [class.is-invalid]="leaveForm.get('fromDate')?.invalid && leaveForm.get('fromDate')?.touched">
+                  <div class="invalid-feedback"
+                    *ngIf="leaveForm.get('fromDate')?.invalid && leaveForm.get('fromDate')?.touched">
+                    Please select a start date.
+                  </div>
+                </div>
+
+                <!-- To Date -->
+                <div class="col-md-6">
+                  <label for="toDate" class="form-label fw-bold mb-2">
+                    To Date <span class="text-danger">*</span>
+                  </label>
+                  <input type="date" class="form-control form-control-lg" id="toDate" formControlName="toDate"
+                    [min]="leaveForm.get('fromDate')?.value || minDate"
+                    [class.is-invalid]="leaveForm.get('toDate')?.invalid && leaveForm.get('toDate')?.touched">
+                  <div class="invalid-feedback"
+                    *ngIf="leaveForm.get('toDate')?.invalid && leaveForm.get('toDate')?.touched">
+                    Please select an end date.
+                  </div>
+                </div>
+
+                <!-- Leave Days Info -->
+                <div class="col-md-6">
+                  <div class="alert alert-info border-0 py-3 mb-0">
+                    <strong>Total Days:</strong> <span class="fs-5 fw-bold">{{ calculateLeaveDays() }}</span> business
+                    days
+                  </div>
+                </div>
+
+                <!-- Reason -->
+                <div class="col-12">
+                  <label for="reason" class="form-label fw-bold mb-2">
+                    Reason for Leave <span class="text-danger">*</span>
+                  </label>
+                  <textarea class="form-control form-control-lg" id="reason" rows="4"
+                    placeholder="Please provide a reason for your leave request (minimum 10 characters)"
+                    formControlName="reason"
+                    [class.is-invalid]="leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched"></textarea>
+                  <small class="text-secondary d-block mt-2">
+                    Characters: {{ leaveForm.get('reason')?.value?.length || 0 }}/200
+                  </small>
+                  <div class="invalid-feedback d-block"
+                    *ngIf="leaveForm.get('reason')?.invalid && leaveForm.get('reason')?.touched">
+                    <span *ngIf="leaveForm.get('reason')?.errors?.['required']">Please provide a reason.</span>
+                    <span *ngIf="leaveForm.get('reason')?.errors?.['minlength']">Reason must be at least 10
+                      characters.</span>
+                  </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-12 mt-4 pt-2">
+                  <div class="d-grid d-md-flex gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold"
+                      [disabled]="leaveSubmitting || leaveForm.invalid">
+                      <span *ngIf="!leaveSubmitting">
+                        <i class="bi bi-check-circle me-2"></i>Submit Application
+                      </span>
+                      <span *ngIf="leaveSubmitting">
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Processing...
+                      </span>
+                    </button>
+                    <button type="reset" class="btn btn-secondary btn-lg fw-bold" (click)="toggleLeaveForm()">
+                      <i class="bi bi-x-circle me-2"></i>Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- No Data State -->
+  <div *ngIf="!employee && !loading && !error" class="container">
+    <div class="alert alert-info alert-lg d-flex align-items-center border-0" role="alert">
+      <i class="bi bi-info-circle me-3 fs-5"></i>
+      No employee data found.
     </div>
   </div>
 </div>
-<div *ngIf="!employee" class="alert alert-info mt-4">No employee data found.</div>

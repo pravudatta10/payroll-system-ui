@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Pending Leave Requests</h5>
+    </div>
+
+    <div class="card-body">
+
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary"></div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="!loading && leaves.length === 0" class="alert alert-info">
+        No pending leave requests.
+      </div>
+
+      <div class="table-responsive" *ngIf="leaves.length > 0">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Emp Code</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Days</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let leave of leaves">
+              <td>{{ leave.empCode }}</td>
+              <td>{{ leave.employeeName }}</td>
+              <td>{{ leave.leaveType }}</td>
+              <td>{{ leave.fromDate }}</td>
+              <td>{{ leave.toDate }}</td>
+              <td>{{ leave.totalDays }}</td>
+              <td class="text-center">
+                <button class="btn btn-success btn-sm me-2"
+                        (click)="approve(leave.id)">
+                  Approve
+                </button>
+                <button class="btn btn-danger btn-sm"
+                        (click)="reject(leave.id)">
+                  Reject
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
