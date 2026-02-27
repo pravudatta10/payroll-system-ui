@@ -34,7 +34,7 @@
           <tbody>
             <tr *ngFor="let leave of leaves">
               <td>{{ leave.empCode }}</td>
-              <td>{{ leave.employeeName }}</td>
+              <td>{{ leave.firstName }} {{ leave.middleName }} {{ leave.lastName }}</td> 
               <td>{{ leave.leaveType }}</td>
               <td>{{ leave.fromDate }}</td>
               <td>{{ leave.toDate }}</td>

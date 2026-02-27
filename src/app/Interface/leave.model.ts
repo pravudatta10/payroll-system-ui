@@ -10,7 +10,9 @@ export interface LeaveRequest {
 export interface LeaveApplicationResponse {
   id: number;
   empCode: string;
-  employeeName: string;
+  firstName:string;
+  middleName:string;
+  lastName:string;
   leaveType: string;
   fromDate: string;
   toDate: string;

@@ -2,7 +2,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { EmployeeManagementComponent } from './component/employee-management/employee-management.component';
-
 import { PayrollManagementComponent } from './component/payroll-management/payroll-management.component';
 import { EmployeeProfileComponent } from './component/employee-profile/employee-profile.component';
 import { LeaveManagementComponent } from './component/leave-management/leave-management.component';

@@ -61,6 +61,8 @@ export class EmployeeManagementComponent implements OnInit {
 
   selectEmployee(employee: Employee): void {
     this.selectedEmployee = employee;
+    console.log("this.selectedEmployee",this.selectedEmployee);
+    
     this.employeeForm.patchValue({
       firstName: employee.firstName,
       middleName: employee.middleName || '',

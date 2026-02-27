@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveService } from '../../Service/leave.service';
 import { LeaveApplicationResponse } from '../../Interface/leave.model';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../Service/notification.service';
 
 @Component({
   selector: 'app-leave-management',
@@ -15,7 +16,7 @@ export class LeaveManagementComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  constructor(private leaveService: LeaveService) { }
+  constructor(private leaveService: LeaveService,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.loadPendingLeaves();
@@ -25,6 +26,8 @@ export class LeaveManagementComponent implements OnInit {
     this.loading = true;
     this.leaveService.getLeaves().subscribe({
       next: (data) => {
+        console.log('Leave data:', data);
+        
         this.leaves = data;
         this.loading = false;
       },
@@ -36,19 +39,17 @@ export class LeaveManagementComponent implements OnInit {
     });
   }
 
-  approve(id: number): void {
-    if (!confirm('Approve this leave request?')) return;
-
-    this.leaveService.approveLeave(id).subscribe({
-      next: () => {
-        this.leaves = this.leaves.filter(l => l.id !== id);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Approval failed');
-      }
-    });
-  }
+approve(id: number): void {
+  this.leaveService.approveLeave(id).subscribe({
+    next: () => {
+      this.leaves = this.leaves.filter(l => l.id !== id);
+      this.notificationService.success('Leave approved successfully');
+    },
+    error: () => {
+      this.notificationService.error('Approval failed');
+    }
+  });
+}
 
   reject(id: number): void {
     if (!confirm('Reject this leave request?')) return;

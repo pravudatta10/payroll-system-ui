@@ -95,4 +95,5 @@
 <main class="container-fluid" style="padding: 0 15px;" [style.padding-top.px]="(isLoggedIn$ | async) ? 80 : 0"
     [style.min-height]="(isLoggedIn$ | async) ? 'calc(100vh - 80px)' : '100vh'">
     <router-outlet></router-outlet>
+    <app-toast-container></app-toast-container>
 </main>
