@@ -1,1 +1,40 @@
-.container { max-width: 800px; }
+.payroll-page {
+  background-color: #f8f9fa;
+}
+
+.filter-card {
+  background: #ffffff;
+}
+
+.payroll-table thead {
+  background-color: #1f2937;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.payroll-table th {
+  padding: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payroll-table td {
+  padding: 1rem;
+}
+
+.payroll-table tbody tr {
+  transition: all 0.2s ease-in-out;
+}
+
+.payroll-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.badge {
+  font-size: 0.75rem;
+}
+
+.card {
+  border-radius: 1rem;
+}
