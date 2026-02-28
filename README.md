@@ -1,59 +1,74 @@
-# PayrollSystem
+# 💼 Payroll Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.17.
+A Full-Stack Payroll Management System built using:
 
-## Development server
+- **Backend:** Spring Boot (Microservice-ready)
+- **Frontend:** Angular + Bootstrap 5
+- **Database:** H2
+- **PDF Generation:** Payslip Download
+- **Role-based Access:** HR & Employee Views
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🚀 Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 👩‍💼 HR Module
+- View payroll status of all employees by month
+- Generate payroll if not already generated
+- Download payslip PDF
+- View gross/net salary
+- Track payroll generation status
 
-## Code scaffolding
+### 👨‍💻 Employee Module
+- View personal payroll details
+- Download payslip PDF
+- View earnings and deductions breakdown
+- Track working days / paid days / LOP days
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🏗 Architecture
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Backend (Spring Boot)
 
-```bash
-ng generate --help
-```
+- REST APIs
+- Layered Architecture:
+  - Controller
+  - Service
+  - Repository
+  - DTO
+  - Exception Handling
+- Global Exception Handler
+- PDF Generation Service
+- Transactional Payroll Generation
+- YearMonth-based Payroll Management
 
-## Building
+### Frontend (Angular)
 
-To build the project run:
+- Reactive Forms
+- Bootstrap 5 UI
+- Scroll to preview feature
+- Dynamic month/year filter
+- Blob-based PDF download
+- Component-based architecture 
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🖼 Application Screens
+### 🏠 Login Screen
+![Login](screenshots/login-screen.png)
 
-## Running unit tests
+### 🏠 Employee Dashboard
+![Employee Onboard](screenshots/employee-dashboard.png)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 🏠 Payroll Dashboard
+![Payroll Dashboard](screenshots/payroll-dashboard.png)
 
-```bash
-ng test
-```
+### 🧾 Leave Preview
+![Leave Preview](screenshots/leave-preview.png)
 
-## Running end-to-end tests
+### 👨‍💻 Employee Profile & Leave Section
+![Employee Profile](screenshots/employee-profile.png)
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 📄 Payslip PDF
+![Payslip PDF](screenshots/payslip-pdf.png)
