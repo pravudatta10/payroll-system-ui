@@ -17,6 +17,7 @@ export interface Employee {
   usedPTO: number;
   totalCLSL: number;
   usedCLSL: number;
+  id:number;
 }
 
 export interface EmployeeFormPayload {

@@ -7,7 +7,8 @@ import { EmployeeService } from '../../Service/employee.service';
 import { LeaveService } from '../../Service/leave.service';
 import { LeaveRequest, LEAVE_TYPES, LeaveApplicationResponse } from '../../Interface/leave.model';
 import { NotificationService } from '../../Service/notification.service';
-
+import { PayslipResponse } from '../../Interface/payroll.model';
+import { ViewChild, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-employee-profile',
   standalone: true,
@@ -16,6 +17,7 @@ import { NotificationService } from '../../Service/notification.service';
   styleUrls: ['./employee-profile.component.css']
 })
 export class EmployeeProfileComponent implements OnInit {
+  @ViewChild('payslipSection') payslipSection!: ElementRef;
   employee: Employee | null = null;
   loading = true;
   error: string | null = null;
@@ -31,7 +33,12 @@ export class EmployeeProfileComponent implements OnInit {
   minDate: string = '';
   leaveHistory: LeaveApplicationResponse[] = [];
   leaveHistoryLoading = false;
-
+  selectedMonth: string = '';
+  payslipData: PayslipResponse | null = null;
+  payslipLoading = false;
+  payslipError: string | null = null;
+  filterForm!: FormGroup;
+  employeeId: string = '';
   constructor(
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
@@ -46,6 +53,7 @@ export class EmployeeProfileComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.employeeId = id;
       this.employeeService.getEmployeeByEmpCode(id).subscribe({
         next: (emp) => {
           this.employee = emp;
@@ -81,6 +89,10 @@ export class EmployeeProfileComponent implements OnInit {
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required],
       reason: ['', [Validators.required, Validators.minLength(10)]]
+    });
+    this.filterForm = this.fb.group({
+      year: [new Date().getFullYear(), Validators.required],
+      month: [new Date().getMonth() + 1, Validators.required]
     });
   }
 
@@ -193,5 +205,50 @@ export class EmployeeProfileComponent implements OnInit {
       }
     });
   }
+  viewPayslip() {
+    if (!this.employee || this.filterForm.invalid) return;
 
+    const { year, month } = this.filterForm.value;
+
+    this.payslipLoading = true;
+    this.payslipError = null;
+    this.payslipData = null;
+
+    this.employeeService
+      .getPayslip(this.employee.id, year, month)
+      .subscribe({
+        next: (data: PayslipResponse) => {
+          this.payslipData = data;
+          this.payslipLoading = false;
+          this.notificationService.success('Payslip loaded successfully.');
+          // Scroll after DOM renders
+          setTimeout(() => {
+            this.payslipSection?.nativeElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 100);
+        },
+        error: () => {
+          this.payslipError = 'Payslip not generated for selected month.';
+          this.payslipLoading = false;
+        }
+      });
+  }
+  downloadPayslip() {
+    if (!this.employee || this.filterForm.invalid) return;
+
+    const { year, month } = this.filterForm.value;
+
+    this.employeeService
+      .downloadPayslip(this.employee.id, year, month)
+      .subscribe(blob => {
+        const fileURL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        link.download = `Payslip_${this.employee?.empCode}_${month}-${year}.pdf`;
+        link.click();
+        window.URL.revokeObjectURL(fileURL);
+      });
+  }
 }

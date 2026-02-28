@@ -30,4 +30,16 @@ export class EmployeeService {
   getEmployeeByEmpCode(empCode: string): Observable<Employee> {
     return this.http.get<Employee>(`${this.baseUrl}/${empCode}`);
   }
+  getPayslip(empId: number, year: number, month: number): Observable<any> {
+    return this.http.get<any>(
+      `http://localhost:8080/api/employee/payroll?employeeId=${empId}&year=${year}&month=${month}`
+    );
+  }
+
+  downloadPayslip(empId: number, year: number, month: number): Observable<Blob> {
+    return this.http.get(
+      `http://localhost:8080/api/download?employeeId=${empId}&year=${year}&month=${month}`,
+      { responseType: 'blob' }
+    );
+  }
 }

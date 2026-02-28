@@ -1,4 +1,86 @@
-<div class="container mt-5">
-  <h2>Payroll Management</h2>
-  <p>Payroll management features will be implemented here.</p>
+<div class="container-fluid mt-4">
+
+  <!-- <h3 class="mb-4">Payroll Management</h3> -->
+
+  <div class="card p-3 shadow-sm mb-4">
+    <form [formGroup]="filterForm" class="row g-3 align-items-end">
+
+      <div class="col-md-3">
+        <label class="form-label">Year</label>
+        <input type="number" class="form-control" formControlName="year">
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">Month</label>
+        <select class="form-select" formControlName="month">
+          <option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">
+            {{ m }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <button type="button" class="btn btn-primary w-100" (click)="loadPayroll()">
+          Load Payroll
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <div *ngIf="payrollList.length > 0" class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Status</th>
+          <th>Gross</th>
+          <th>Net</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of payrollList">
+
+          <td>{{ p.employeeName }}</td>
+          <td>{{ p.designation }}</td>
+
+          <td>
+            <span class="badge" [ngClass]="{
+                    'bg-success': p.payrollGenerated,
+                    'bg-secondary': !p.payrollGenerated
+                  }">
+              {{ p.status }}
+            </span>
+          </td>
+
+          <td>{{ p.grossSalary ?? '-' }}</td>
+          <td>{{ p.netSalary ?? '-' }}</td>
+
+          <td class="text-center">
+
+            <button *ngIf="!p.payrollGenerated" class="btn btn-sm btn-warning me-2"
+              (click)="generatePayroll(p.employeeId)">
+              Generate
+            </button>
+
+            <button *ngIf="p.payrollGenerated" class="btn btn-sm btn-success" (click)="downloadPayroll(p.employeeId)">
+              Download
+            </button>
+
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
 </div>
